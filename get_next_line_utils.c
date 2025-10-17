@@ -1,17 +1,19 @@
 #include "get_next_line.h"
 
-int check_for_newline(char *buff, int size) {
+int check_for_newline(char *buff, int size)
+{
 	int i;
 
 	i = 0;
-	while (i < size) {
-		if(buff[i] == '\n')
-			return(i);
-		if(buff[i] == '\0')
-			return(-2);
+	while (i < size)
+	{
+		if (buff[i] == '\n')
+			return (i);
+		if (buff[i] == '\0')
+			return (-2);
 		i++;
 	}
-	return(-1);
+	return (-1);
 }
 
 void line_resize(char **line, int size, int new_size)
@@ -40,9 +42,9 @@ void *ft_memcpy(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-size_t	ft_strlen(const char *str)
+size_t ft_strlen(const char *str)
 {
-	size_t	i;
+	size_t i;
 
 	if (!str)
 		return (0);
@@ -52,21 +54,23 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-void my_strcat(char *dest, char *src, int n) {
+void my_strncat(char *dest, char *src, int n)
+{
 	int dest_len;
 	int i;
 
 	i = 0;
 	dest_len = ft_strlen(dest);
-    while (i < n) {
+	while (i < n)
+	{
 		dest[dest_len + i] = src[i];
 		i++;
-	}   
+	}
 }
 
-void	*ft_memmove(void *dest, const void *src, size_t n)
+void *ft_memmove(void *dest, const void *src, size_t n)
 {
-	size_t	i;
+	size_t i;
 
 	if (dest < src)
 	{

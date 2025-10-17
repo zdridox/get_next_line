@@ -1,7 +1,8 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-int main() {
+int main()
+{
     /*
     char str1[] = "adasdasda";
     char *str2 = malloc(5);
@@ -23,6 +24,7 @@ int main() {
     printf("%s\n", str3);
     */
     int fd = open("file.txt", O_RDONLY);
+    printf("%s", get_next_line(fd));
     printf("%s", get_next_line(fd));
     printf("%s", get_next_line(fd));
     return 0;
