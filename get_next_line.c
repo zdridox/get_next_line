@@ -1,6 +1,6 @@
 #include "get_next_line.h"
 
-size_t BUFFER_SIZE = 42;
+size_t BUFFER_SIZE = 3;
 
 char *get_next_line(int fd) // wypierdala sie jak wchodzi w while loop czyli zawsze jak jedno przeczytanie do buffera nie czyta calego pliku naraz
 {

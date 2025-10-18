@@ -25,7 +25,7 @@ void line_resize(char **line, int size, int new_size)
 	free(*line);
 	*line = malloc(new_size);
 	ft_memcpy(*line, buff_line, (size_t)size);
-	*line[size] = '\0';
+	(*line)[size] = '\0';
 	free(buff_line);
 }
 
@@ -54,7 +54,7 @@ size_t ft_strlen(const char *str)
 	return (i);
 }
 
-void my_strncat(char *dest, char *src, int n)
+void my_strcat(char *dest, char *src, int n)
 {
 	int dest_len;
 	int i;
