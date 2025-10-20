@@ -43,11 +43,9 @@ char *get_next_line(int fd)
 			ft_memmove(buffer, &buffer[check_for_newline(buffer, bytes_read) + 1], remaining);
 		bytes_read = remaining;
 	}
-	else
-	{
-		if (line[0] == '\0')
-			return (NULL);
-		bytes_read = 0;
-	}
+
+	if (line[0] == '\0')
+		return (NULL);
+
 	return (line);
 }
