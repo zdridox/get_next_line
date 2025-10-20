@@ -33,10 +33,9 @@ char *get_next_line(int fd) {
 		line[bytes_total] = '\0';
 	}
 
-	int nl_pos = check_for_newline(line, bytes_total);
-	if (nl_pos >= 0)
+	if (check_for_newline(line, bytes_total) >= 0)
 	{
-    line[nl_pos + 1] = '\0';
+    line[check_for_newline(line, bytes_total) + 1] = '\0';
 
     int remaining = bytes_read - (check_for_newline(buffer, bytes_read) + 1);
     if (remaining > 0)
