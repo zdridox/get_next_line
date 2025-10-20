@@ -24,8 +24,9 @@ int main()
     printf("%s\n", str3);
     */
     int fd = open("file.txt", O_RDONLY);
-    printf("%s", get_next_line(fd));
-    printf("%s", get_next_line(fd));
-    printf("%s", get_next_line(fd));
+    printf("1%s", get_next_line(fd));
+    printf("2%s", get_next_line(fd));
+    printf("3%s", get_next_line(fd));
+    printf("4%s", get_next_line(fd));
     return 0;
 }
