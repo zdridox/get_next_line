@@ -2,7 +2,8 @@
 
 size_t BUFFER_SIZE = 4;
 
-char *get_next_line(int fd) {
+char *get_next_line(int fd)
+{
 	char *line;
 	static char *buffer;
 	int bytes_total;
@@ -25,7 +26,7 @@ char *get_next_line(int fd) {
 		line[bytes_read] = '\0';
 	}
 
-	while (check_for_newline(line, bytes_total) < 0 && ( (bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0 ))
+	while (check_for_newline(line, bytes_total) < 0 && ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0))
 	{
 		bytes_total += bytes_read;
 		line_resize(&line, bytes_total - bytes_read, bytes_total + 1);
@@ -35,18 +36,18 @@ char *get_next_line(int fd) {
 
 	if (check_for_newline(line, bytes_total) >= 0)
 	{
-    line[check_for_newline(line, bytes_total) + 1] = '\0';
+		line[check_for_newline(line, bytes_total) + 1] = '\0';
 
-    int remaining = bytes_read - (check_for_newline(buffer, bytes_read) + 1);
-    if (remaining > 0)
-        ft_memmove(buffer, &buffer[check_for_newline(buffer, bytes_read) + 1], remaining);
-    bytes_read = remaining;
+		int remaining = bytes_read - (check_for_newline(buffer, bytes_read) + 1);
+		if (remaining > 0)
+			ft_memmove(buffer, &buffer[check_for_newline(buffer, bytes_read) + 1], remaining);
+		bytes_read = remaining;
 	}
 	else
 	{
-	if(line[0] == '\0')
-		return (NULL);
-    bytes_read = 0;
+		if (line[0] == '\0')
+			return (NULL);
+		bytes_read = 0;
 	}
 	return (line);
 }

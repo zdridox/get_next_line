@@ -42,32 +42,6 @@ void *ft_memcpy(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-size_t ft_strlen(const char *str)
-{
-	size_t i;
-
-	if (!str)
-		return (0);
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-void my_strcat(char *dest, char *src, int n)
-{
-	int dest_len;
-	int i;
-
-	i = 0;
-	dest_len = ft_strlen(dest);
-	while (i < n)
-	{
-		dest[dest_len + i] = src[i];
-		i++;
-	}
-}
-
 void *ft_memmove(void *dest, const void *src, size_t n)
 {
 	size_t i;
