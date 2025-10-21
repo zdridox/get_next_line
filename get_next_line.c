@@ -1,6 +1,6 @@
 #include "get_next_line.h"
 
-size_t BUFFER_SIZE = 4;
+size_t BUFFER_SIZE = 16;
 
 char *get_next_line(int fd)
 {
