@@ -11,7 +11,18 @@ char *get_next_line(int fd)
 
 	line = malloc(BUFFER_SIZE + 1);
 	current_fd = handle_fd(&_buffers, fd);
-
+	bytes_total = current_fd->bytes_read;
+	if (current_fd->buffer[0] == '\0')
+	{
+		bytes_total += current_fd->bytes_read = read(fd, current_fd->buffer, BUFFER_SIZE);
+		ft_memcpy(line, current_fd->buffer, bytes_total);
+		line[bytes_total] = '\0';
+	}
+	else
+	{
+		ft_memcpy(line, current_fd->buffer, bytes_total);
+		line[bytes_total] = '\0';
+	}
 	while (check_for_newline(line, bytes_total) < 0 && ((current_fd->bytes_read = read(fd, current_fd->buffer, BUFFER_SIZE)) > 0))
 	{
 		bytes_total += current_fd->bytes_read;
@@ -58,6 +69,7 @@ t_list *add_fd_back(t_list **list, int fd)
 	p = *list;
 	node = malloc(sizeof(t_list));
 	node->buffer = malloc(BUFFER_SIZE);
+	node->buffer[0] = '\0';
 	node->bytes_read = 0;
 	node->fd = fd;
 	node->next = NULL;

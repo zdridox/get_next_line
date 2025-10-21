@@ -24,8 +24,13 @@ int main()
     printf("%s\n", str3);
     */
     int fd = open("file.txt", O_RDONLY);
+    int fd2 = open("file2.txt", O_RDONLY);
     printf("%s", get_next_line(fd));
+    printf("%s", get_next_line(fd2));
     printf("%s", get_next_line(fd));
+    printf("%s", get_next_line(fd2));
+    printf("%s", get_next_line(fd));
+    printf("%s", get_next_line(fd2));
     printf("%s", get_next_line(fd));
     printf("%s", get_next_line(fd));
     return 0;
