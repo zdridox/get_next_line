@@ -4,33 +4,19 @@ size_t BUFFER_SIZE = 16;
 
 char *get_next_line(int fd)
 {
+	static t_list *_buffers;
+	t_list *current_fd;
 	char *line;
-	static char *buffer;
 	int bytes_total;
-	static int bytes_read;
 
-	if (!bytes_read)
-		bytes_read = 0;
-	bytes_total = bytes_read;
 	line = malloc(BUFFER_SIZE + 1);
-	if (!buffer)
-	{
-		buffer = malloc(BUFFER_SIZE);
-		bytes_total += bytes_read = read(fd, buffer, BUFFER_SIZE);
-		ft_memcpy(line, buffer, bytes_total);
-		line[bytes_total] = '\0';
-	}
-	else
-	{
-		ft_memcpy(line, buffer, bytes_read);
-		line[bytes_read] = '\0';
-	}
+	current_fd = handle_fd(&_buffers, fd);
 
-	while (check_for_newline(line, bytes_total) < 0 && ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0))
+	while (check_for_newline(line, bytes_total) < 0 && ((current_fd->bytes_read = read(fd, current_fd->buffer, BUFFER_SIZE)) > 0))
 	{
-		bytes_total += bytes_read;
-		line_resize(&line, bytes_total - bytes_read, bytes_total + 1);
-		ft_memcpy(&line[bytes_total - bytes_read], buffer, bytes_read);
+		bytes_total += current_fd->bytes_read;
+		line_resize(&line, bytes_total - current_fd->bytes_read, bytes_total + 1);
+		ft_memcpy(&line[bytes_total - current_fd->bytes_read], current_fd->buffer, current_fd->bytes_read);
 		line[bytes_total] = '\0';
 	}
 
@@ -38,14 +24,50 @@ char *get_next_line(int fd)
 	{
 		line[check_for_newline(line, bytes_total) + 1] = '\0';
 
-		int remaining = bytes_read - (check_for_newline(buffer, bytes_read) + 1);
+		int remaining = current_fd->bytes_read - (check_for_newline(current_fd->buffer, current_fd->bytes_read) + 1);
 		if (remaining > 0)
-			ft_memmove(buffer, &buffer[check_for_newline(buffer, bytes_read) + 1], remaining);
-		bytes_read = remaining;
+			ft_memmove(current_fd->buffer, &current_fd->buffer[check_for_newline(current_fd->buffer, current_fd->bytes_read) + 1], remaining);
+		current_fd->bytes_read = remaining;
 	}
 
 	if (line[0] == '\0')
 		return (NULL);
 
 	return (line);
+}
+
+t_list *handle_fd(t_list **list, int fd)
+{
+	t_list *p;
+
+	p = *list;
+	while (p != NULL)
+	{
+		if (p->fd == fd)
+			return (p);
+		p = p->next;
+	}
+	return (add_fd_back(list, fd));
+}
+
+t_list *add_fd_back(t_list **list, int fd)
+{
+	t_list *node;
+	t_list *p;
+
+	p = *list;
+	node = malloc(sizeof(t_list));
+	node->buffer = malloc(BUFFER_SIZE);
+	node->bytes_read = 0;
+	node->fd = fd;
+	node->next = NULL;
+	if (!*list)
+	{
+		*list = node;
+		return (node);
+	}
+	while (p->next != NULL)
+		p = p->next;
+	p->next = node;
+	return (node);
 }
