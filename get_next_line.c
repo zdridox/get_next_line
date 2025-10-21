@@ -43,7 +43,6 @@ char *get_next_line(int fd)
 
 	if (line[0] == '\0')
 		return (NULL);
-
 	return (line);
 }
 
