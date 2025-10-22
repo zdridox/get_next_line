@@ -30,7 +30,6 @@ char *get_next_line(int fd)
 		ft_memcpy(&line[bytes_total - current_fd->bytes_read], current_fd->buffer, current_fd->bytes_read);
 		line[bytes_total] = '\0';
 	}
-
 	if (check_for_newline(line, bytes_total) >= 0)
 	{
 		line[check_for_newline(line, bytes_total) + 1] = '\0';
