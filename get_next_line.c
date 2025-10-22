@@ -40,7 +40,7 @@ char *get_next_line(int fd)
 		current_fd->bytes_read = remaining;
 	}
 	else
-		free_buffers(&_buffers);
+		free_buffer(&_buffers, fd);
 
 	if (line[0] == '\0')
 		return (free(line), NULL);
@@ -84,15 +84,22 @@ t_list *add_fd_back(t_list **list, int fd)
 	return (node);
 }
 
-void free_buffers(t_list **buffers)
+void free_buffer(t_list **buffers, int fd)
 {
 	t_list *p;
+	t_list *p2;
 
-	while (*buffers != NULL)
+	p = *buffers;
+	while (p != NULL)
 	{
-		p = *buffers;
-		free(p->buffer);
-		*buffers = p->next;
-		free(p);
+		if (p->next->fd == fd)
+		{
+			p2 = p->next->next;
+			free(p->next->buffer);
+			free(p->next);
+			p->next = p2;
+			break;
+		}
+		p = p->next;
 	}
 }

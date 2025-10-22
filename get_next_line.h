@@ -19,4 +19,4 @@ void *ft_memcpy(void *dest, const void *src, size_t n);
 void *ft_memmove(void *dest, const void *src, size_t n);
 t_list *handle_fd(t_list **list, int fd);
 t_list *add_fd_back(t_list **list, int fd);
-void free_buffers(t_list **buffers);
+void free_buffer(t_list **buffers, int fd);
