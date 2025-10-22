@@ -10,6 +10,7 @@ char *get_next_line(int fd)
 	int bytes_total;
 
 	line = malloc(BUFFER_SIZE + 1);
+	line[0] = '\0';
 	current_fd = handle_fd(&_buffers, fd);
 	bytes_total = current_fd->bytes_read;
 	if (current_fd->buffer[0] == '\0')
