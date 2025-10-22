@@ -65,3 +65,30 @@ void *ft_memmove(void *dest, const void *src, size_t n)
 	}
 	return (dest);
 }
+
+void free_buffer(t_list **buffers, int fd)
+{
+	t_list *p;
+	t_list *p2;
+
+	p = *buffers;
+	if (p->next == NULL)
+	{
+		free(p->buffer);
+		free(p);
+		*buffers = NULL;
+		return;
+	}
+	while (p != NULL)
+	{
+		if (p->next && p->next->fd == fd)
+		{
+			p2 = p->next->next;
+			free(p->next->buffer);
+			free(p->next);
+			p->next = p2;
+			break;
+		}
+		p = p->next;
+	}
+}
