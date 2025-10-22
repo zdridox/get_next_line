@@ -39,9 +39,11 @@ char *get_next_line(int fd)
 			ft_memmove(current_fd->buffer, &current_fd->buffer[check_for_newline(current_fd->buffer, current_fd->bytes_read) + 1], remaining);
 		current_fd->bytes_read = remaining;
 	}
+	else
+		free_buffers(&_buffers);
 
 	if (line[0] == '\0')
-		return (NULL);
+		return (free(line), NULL);
 	return (line);
 }
 
@@ -80,4 +82,17 @@ t_list *add_fd_back(t_list **list, int fd)
 		p = p->next;
 	p->next = node;
 	return (node);
+}
+
+void free_buffers(t_list **buffers)
+{
+	t_list *p;
+
+	while (*buffers != NULL)
+	{
+		p = *buffers;
+		free(p->buffer);
+		*buffers = p->next;
+		free(p);
+	}
 }
