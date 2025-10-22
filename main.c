@@ -3,8 +3,9 @@
 
 int main()
 {
-    int fd = open("file.txt", O_RDONLY);
-    int fd2 = open("file2.txt", O_RDONLY);
+    int fd, fd2;
+    fd = open("get_next_line.c", O_RDONLY);
+    fd2 = open("get_next_line_utils.c", O_RDONLY);
     char *line = get_next_line(fd);
     while (line != NULL)
     {
@@ -20,6 +21,33 @@ int main()
         free(line2);
         line2 = get_next_line(fd2);
     }
+    // fd = open("file.txt", O_RDONLY);
+    // fd2 = open("file2.txt", O_RDONLY);
+    // char *str;
+    // str = get_next_line(fd);
+    // printf("%s", str);
+    // free(str);
+    // str = get_next_line(fd2);
+    // printf("%s", str);
+    // free(str);
+    // str = get_next_line(fd);
+    // printf("%s", str);
+    // free(str);
+    // str = get_next_line(fd2);
+    // printf("%s", str);
+    // free(str);
+    // str = get_next_line(fd);
+    // printf("%s", str);
+    // free(str);
+    // str = get_next_line(fd2);
+    // printf("%s", str);
+    // free(str);
+    // str = get_next_line(fd);
+    // printf("%s", str);
+    // free(str);
+    // str = get_next_line(fd2);
+    // printf("%s", str);
+    // free(str);
     close(fd);
     close(fd2);
     return 0;
