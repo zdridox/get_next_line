@@ -4,11 +4,12 @@
 
 #include <stdio.h>
 
+#define BUFFER_SIZE 64
 typedef struct s_list
 {
     int fd;
     char *buffer;
-    size_t bytes_read;
+    int bytes_read;
     struct s_list *next;
 } t_list;
 

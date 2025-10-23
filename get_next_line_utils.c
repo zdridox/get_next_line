@@ -79,3 +79,26 @@ void free_buffer(t_list **buffers, int fd)
 		p = p->next;
 	}
 }
+
+t_list *add_fd_back(t_list **list, int fd)
+{
+	t_list *node;
+	t_list *p;
+
+	p = *list;
+	node = malloc(sizeof(t_list));
+	node->buffer = malloc(BUFFER_SIZE);
+	node->buffer[0] = '\0';
+	node->bytes_read = 0;
+	node->fd = fd;
+	node->next = NULL;
+	if (!*list)
+	{
+		*list = node;
+		return (node);
+	}
+	while (p->next != NULL)
+		p = p->next;
+	p->next = node;
+	return (node);
+}

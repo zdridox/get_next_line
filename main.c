@@ -54,5 +54,6 @@ int main()
     close(fd);
     close(fd2);
     printf("%s", get_next_line(-1));
+    // printf("%s", get_next_line(0));
     return 0;
 }
