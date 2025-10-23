@@ -40,7 +40,7 @@ void handle_buffer(char **line, t_list *current_fd, int *bytes_total, int fd, t_
 
 void grab_data(char **line, t_list *current_fd, int *bytes_total, int fd)
 {
-	while ((*line)[0] != '\0' && check_for_newline(*line, *bytes_total) < 0 && ((current_fd->bytes_read = read(fd, current_fd->buffer, BUFFER_SIZE)) > 0))
+	while (check_for_newline(*line, *bytes_total) < 0 && ((current_fd->bytes_read = read(fd, current_fd->buffer, BUFFER_SIZE)) > 0))
 	{
 		*bytes_total += current_fd->bytes_read;
 		line_resize(line, *bytes_total - current_fd->bytes_read, *bytes_total + 1);
@@ -56,7 +56,7 @@ void load_buffer(char **line, t_list *current_fd, int *bytes_total, int fd)
 	if (current_fd->buffer[0] == '\0')
 	{
 		*bytes_total += current_fd->bytes_read = read(fd, current_fd->buffer, BUFFER_SIZE);
-		if (current_fd->bytes_read < 0)
+		if (current_fd->bytes_read <= 0)
 		{
 			(*line)[0] = '\0';
 			return;

@@ -1,6 +1,7 @@
 NAME    = get_next_line
 CC      = cc
 CFLAGS  = -Wall -Wextra -Werror -g
+BUFFER_SIZE ?= 1024
 
 SRC     = get_next_line.c get_next_line_utils.c main.c
 OBJ     = $(SRC:src/%.c=obj/%.o)
@@ -9,11 +10,11 @@ HEADER  = include/get_next_line.h
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $@
+	$(CC) $(CFLAGS) -D BUFFER_SIZE=$(BUFFER_SIZE) $(OBJ) -o $@
 
 obj/%.o: src/%.c $(HEADER)
 	@mkdir -p obj
-	$(CC) $(CFLAGS) -Iinclude -c $< -o $@
+	$(CC) $(CFLAGS) -D BUFFER_SIZE=$(BUFFER_SIZE) -Iinclude -c $< -o $@
 
 clean:
 	rm -rf obj

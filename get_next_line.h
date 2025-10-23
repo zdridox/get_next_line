@@ -3,8 +3,9 @@
 #include <fcntl.h>
 
 #include <stdio.h>
-
-#define BUFFER_SIZE 64
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 1024
+#endif
 typedef struct s_list
 {
     int fd;
