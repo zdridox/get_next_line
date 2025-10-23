@@ -9,8 +9,6 @@ int check_for_newline(char *buff, int size)
 	{
 		if (buff[i] == '\n')
 			return (i);
-		if (buff[i] == '\0')
-			return (-2);
 		i++;
 	}
 	return (-1);
