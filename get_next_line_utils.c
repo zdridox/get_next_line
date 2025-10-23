@@ -21,25 +21,12 @@ void line_resize(char **line, int size, int new_size)
 	char *buff_line;
 
 	buff_line = malloc(size);
-	ft_memcpy(buff_line, *line, (size_t)size);
+	ft_memmove(buff_line, *line, (size_t)size);
 	free(*line);
 	*line = malloc(new_size);
-	ft_memcpy(*line, buff_line, (size_t)size);
+	ft_memmove(*line, buff_line, (size_t)size);
 	(*line)[size] = '\0';
 	free(buff_line);
-}
-
-void *ft_memcpy(void *dest, const void *src, size_t n)
-{
-	size_t i;
-
-	i = 0;
-	while (i < n)
-	{
-		((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
-		i++;
-	}
-	return (dest);
 }
 
 void *ft_memmove(void *dest, const void *src, size_t n)

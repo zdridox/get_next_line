@@ -1,6 +1,6 @@
 #include "get_next_line.h"
 
-size_t BUFFER_SIZE = 16;
+size_t BUFFER_SIZE = 64;
 
 char *get_next_line(int fd)
 {
@@ -15,21 +15,29 @@ char *get_next_line(int fd)
 	line[0] = '\0';
 	current_fd = handle_fd(&_buffers, fd);
 	bytes_total = current_fd->bytes_read;
-	handle_buffer(&line, current_fd, &bytes_total, fd);
+	load_buffer(&line, current_fd, &bytes_total, fd);
 	grab_data(&line, current_fd, &bytes_total, fd);
-	if (check_for_newline(line, bytes_total) >= 0)
+	handle_buffer(&line, current_fd, &bytes_total, fd, &_buffers);
+	if (line[0] == '\0')
+		return (free(line), NULL);
+	return (line);
+}
+
+void handle_buffer(char **line, t_list *current_fd, int *bytes_total, int fd, t_list **_buffers)
+{
+	int remaining;
+
+	remaining = 0;
+	if (check_for_newline(*line, *bytes_total) >= 0)
 	{
-		line[check_for_newline(line, bytes_total) + 1] = '\0';
-		int remaining = current_fd->bytes_read - (check_for_newline(current_fd->buffer, current_fd->bytes_read) + 1);
+		(*line)[check_for_newline(*line, *bytes_total) + 1] = '\0';
+		remaining = current_fd->bytes_read - (check_for_newline(current_fd->buffer, current_fd->bytes_read) + 1);
 		if (remaining > 0)
 			ft_memmove(current_fd->buffer, &current_fd->buffer[check_for_newline(current_fd->buffer, current_fd->bytes_read) + 1], remaining);
 		current_fd->bytes_read = remaining;
 	}
 	else
-		free_buffer(&_buffers, fd);
-	if (line[0] == '\0')
-		return (free(line), NULL);
-	return (line);
+		free_buffer(_buffers, fd);
 }
 
 void grab_data(char **line, t_list *current_fd, int *bytes_total, int fd)
@@ -38,22 +46,22 @@ void grab_data(char **line, t_list *current_fd, int *bytes_total, int fd)
 	{
 		*bytes_total += current_fd->bytes_read;
 		line_resize(line, *bytes_total - current_fd->bytes_read, *bytes_total + 1);
-		ft_memcpy(&(*line)[*bytes_total - current_fd->bytes_read], current_fd->buffer, current_fd->bytes_read);
+		ft_memmove(&(*line)[*bytes_total - current_fd->bytes_read], current_fd->buffer, current_fd->bytes_read);
 		(*line)[*bytes_total] = '\0';
 	}
 }
 
-void handle_buffer(char **line, t_list *current_fd, int *bytes_total, int fd)
+void load_buffer(char **line, t_list *current_fd, int *bytes_total, int fd)
 {
 	if (current_fd->buffer[0] == '\0')
 	{
 		*bytes_total += current_fd->bytes_read = read(fd, current_fd->buffer, BUFFER_SIZE);
-		ft_memcpy(*line, current_fd->buffer, *bytes_total);
+		ft_memmove(*line, current_fd->buffer, *bytes_total);
 		(*line)[*bytes_total] = '\0';
 	}
 	else
 	{
-		ft_memcpy(*line, current_fd->buffer, *bytes_total);
+		ft_memmove(*line, current_fd->buffer, *bytes_total);
 		(*line)[*bytes_total] = '\0';
 	}
 }
