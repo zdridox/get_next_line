@@ -85,7 +85,11 @@ t_list *add_fd_back(t_list **list, int fd)
 
 	p = *list;
 	node = malloc(sizeof(t_list));
+	if (!node)
+		return (NULL);
 	node->buffer = malloc(BUFFER_SIZE);
+	if (!node->buffer)
+		return (NULL);
 	node->buffer[0] = '\0';
 	node->bytes_read = 0;
 	node->fd = fd;

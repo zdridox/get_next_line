@@ -12,9 +12,13 @@ char *get_next_line(int fd)
 	line = malloc(BUFFER_SIZE + 1);
 	line[0] = '\0';
 	current_fd = handle_fd(&_buffers, fd);
+	if (!current_fd)
+		return (NULL);
 	bytes_total = current_fd->bytes_read;
 	load_buffer(&line, current_fd, &bytes_total, fd);
 	grab_data(&line, current_fd, &bytes_total, fd);
+	if (!line)
+		return (NULL);
 	handle_buffer(&line, current_fd, &bytes_total, fd, &_buffers);
 	if (line[0] == '\0')
 		return (free(line), NULL);
@@ -44,6 +48,8 @@ void grab_data(char **line, t_list *current_fd, int *bytes_total, int fd)
 	{
 		*bytes_total += current_fd->bytes_read;
 		line_resize(line, *bytes_total - current_fd->bytes_read, *bytes_total + 1);
+		if (!*line)
+			return;
 		ft_memmove(&(*line)[*bytes_total - current_fd->bytes_read], current_fd->buffer, current_fd->bytes_read);
 		(*line)[*bytes_total] = '\0';
 	}
