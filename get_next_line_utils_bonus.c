@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzdrodow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/16 15:20:06 by mzdrodow          #+#    #+#             */
-/*   Updated: 2025/11/16 15:20:08 by mzdrodow         ###   ########.fr       */
+/*   Created: 2025/11/16 15:45:38 by mzdrodow          #+#    #+#             */
+/*   Updated: 2025/11/16 15:45:40 by mzdrodow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	check_for_newline(char *buff, int size)
 {
